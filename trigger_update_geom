@@ -1,0 +1,18 @@
+-- crea una funzione per fare l'update della colonna geometria quando vengono inseriti i dati lat lon
+CREATE OR REPLACE FUNCTION update_geom()
+RETURNS TRIGGER AS $upgeom$
+BEGIN
+IF(TG_OP='INSERT') THEN
+UPDATE investimenti
+SET geom = ST_SetSRID(ST_MakePoint(lat,lon), 4326)
+WHERE geom IS NULL
+;
+END IF;
+RETURN NEW;
+END;
+$upgeom$ LANGUAGE plpgsql;
+
+--crea il trigger con la funzione appena creata
+CREATE TRIGGER update_geom_insert
+AFTER INSERT ON investimenti
+FOR EACH STATEMENT EXECUTE PROCEDURE update_geom();
