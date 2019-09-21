@@ -4,7 +4,7 @@ RETURNS TRIGGER AS $upgeom$
 BEGIN
 IF(TG_OP='INSERT') THEN
 UPDATE investimenti
-SET geom = ST_SetSRID(ST_MakePoint(lat,lon), 4326)
+SET geom = ST_SetSRID(ST_MakePoint(lon,lat), 4326)
 WHERE geom IS NULL
 ;
 END IF;
