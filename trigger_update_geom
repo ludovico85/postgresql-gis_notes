@@ -16,3 +16,31 @@ $upgeom$ LANGUAGE plpgsql;
 CREATE TRIGGER update_geom_insert
 AFTER INSERT ON investimenti
 FOR EACH STATEMENT EXECUTE PROCEDURE update_geom();
+
+--crea la funzione per l'inserimento delle geometrie vuote e per l'update
+CREATE OR REPLACE FUNCTION update_geom()
+RETURNS TRIGGER AS $upgeom$
+BEGIN
+IF(TG_OP='INSERT') THEN
+UPDATE road_kill_app.road_kill_data
+SET geom = ST_SetSRID(ST_MakePoint(longitude,latitude), 4326)
+WHERE geom IS NULL
+;
+ELSIF (TG_OP='UPDATE') THEN
+UPDATE road_kill_app.road_kill_data
+SET geom = ST_SetSRID(ST_MakePoint(longitude,latitude), 4326)
+;
+END IF;
+RETURN NEW;
+END;
+$upgeom$ LANGUAGE plpgsql;
+-- crea il trigger insert dopo linserimento di un record vuoto
+CREATE TRIGGER insert_geom
+AFTER INSERT ON road_kill_app.road_kill_data
+FOR EACH ROW EXECUTE PROCEDURE update_geom();
+-- crea il trigger update con la funzione precedente quando avviene un aggiornamento della colonna lat or long
+CREATE TRIGGER update_geom
+AFTER UPDATE ON road_kill_app.road_kill_data
+FOR EACH ROW
+WHEN (OLD.longitude IS DISTINCT FROM NEW.longitude OR OLD.latitude IS DISTINCT FROM NEW.latitude)
+EXECUTE PROCEDURE update_geom();
