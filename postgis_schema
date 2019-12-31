@@ -1,0 +1,10 @@
+allow postgis on different schema
+
+ALTER DATABASE chapter10 SET search_path = public, postgis;
+
+UPDATE pg_extension 
+  SET extrelocatable = TRUE 
+    WHERE extname = 'postgis';
+
+ALTER EXTENSION postgis 
+  SET SCHEMA postgis;
