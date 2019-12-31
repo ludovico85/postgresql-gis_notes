@@ -1,0 +1,2 @@
+ALTER TABLE mytable ADD COLUMN geom geometry(Point, 4326);
+UPDATE mytable SET geom = ST_SetSRID(ST_MakePoint(longitudine, latitudine), 4326);
