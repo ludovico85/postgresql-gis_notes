@@ -47,7 +47,7 @@ CREATE TRIGGER poplatitude_insert
 	FOR EACH STATEMENT EXECUTE PROCEDURE pop_latitude_from_geom();
 
 CREATE TRIGGER poplatitude_update
-	AFTER UPDATE ON "Rettili"
+	AFTER UPDATE ON "mytable"
 	FOR EACH ROW
 	WHEN (OLD.geom IS DISTINCT FROM NEW.geom)
 	EXECUTE PROCEDURE pop_latitude_from_geom();
