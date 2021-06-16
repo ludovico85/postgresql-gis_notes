@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION pop_latitude_from_geom()
 	RETURNS TRIGGER AS $poplatitude$
 
 BEGIN
-	IF (TG_OP='INSERT') THEN
+	IF (TG_OP='INSERT' AND TG_OP='UPDATE) THEN
 	
 	UPDATE "mytable"
 		SET latitude = ST_y(geom);
@@ -45,4 +45,10 @@ Create the trigger to apply the function
 CREATE TRIGGER poplatitude_insert
 	AFTER INSERT ON "mytable"
 	FOR EACH STATEMENT EXECUTE PROCEDURE pop_latitude_from_geom();
+
+CREATE TRIGGER poplatitude_update
+	AFTER UPDATE ON "Rettili"
+	FOR EACH ROW
+	WHEN (OLD.geom IS DISTINCT FROM NEW.geom)
+	EXECUTE PROCEDURE pop_latitude_from_geom();
 ```
