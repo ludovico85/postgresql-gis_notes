@@ -116,7 +116,7 @@ CREATE TRIGGER poplatlon_update
 ### Spatial join
 #### Update a field based on a spatial relation
 
-When a point digitized, the information on the fileds regione, comune and provincia will populated automatically based on the spatial relationship with the limiti_amministrativi table.
+When a point is digitized, the information on field regione, comune and provincia will populated automatically based on the spatial relationship between the point layer and the limiti_amministrativi layer.
 
 ```sql
 CREATE OR REPLACE FUNCTION pop_com_pro_reg_from_geom()
