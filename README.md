@@ -151,3 +151,36 @@ CREATE TRIGGER pop_com_pro_reg_update
 	WHEN (OLD.geom IS DISTINCT FROM NEW.geom)
 	EXECUTE PROCEDURE pop_com_pro_reg_from_geom();
 ```
+
+#### Update a field based on a simple join
+
+```sql
+CREATE OR REPLACE FUNCTION pop_nome_scientifico_rettili()
+	RETURNS TRIGGER AS $popnomscierettili$
+	
+BEGIN
+	IF (TG_OP='INSERT' OR TG_OP='UPDATE') THEN
+
+	UPDATE "Rettili" as r
+		SET specie_nome_scientifico = lr."nome_scientifico"
+		FROM lista_rettili as lr
+		WHERE r.specie_nome_comune = lr.nome_comune;
+	END IF;
+	RETURN NEW;
+END;
+
+
+$popnomscierettili$ LANGUAGE plpgsql;
+```
+Create the Trigger
+```sql
+CREATE TRIGGER pop_nom_sci_insert_rettili
+	AFTER INSERT ON "Rettili"
+	FOR EACH STATEMENT EXECUTE PROCEDURE pop_nome_scientifico_rettili();
+
+CREATE TRIGGER pop_nom_sci_update_rettili
+	AFTER UPDATE ON "Rettili"
+	FOR EACH ROW
+	WHEN (OLD.geom IS DISTINCT FROM NEW.geom)
+	EXECUTE PROCEDURE pop_nome_scientifico_rettili();
+```
