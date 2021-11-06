@@ -1,9 +1,15 @@
 # postgresql-gis_notes
-Series of functions and scripts for Postgresal/PostGIS
+Series of functions and scripts for Postgresql/PostGIS
 # UPGRADING PSQL FOR WINDOWS
 1) Create a copy of the configuration file (pg_hba.conf and postgresql.conf) located in `C:\Program Files\PostgreSQL\XX\data`
-2) Obtaining a complete backup of all databases using the `pg_dumpall` command 
-
+2) Obtaining a complete backup of all databases using the `pg_dump` command
+` cd C:\Program Files\PostgreSQL\11\bin`
+`pg_dump -U postgres -F t punti_investimeno > I:\Backup_db\punti_investimento.tar`
+3) Install the new version of Postgresql
+4) Stop services of both the versions
+5) Create e temporary folder (i.e. I:\temp)
+6) Move on the temp folder
+7) Run the following comand `"C:\Program Files\PostgreSQL\14\bin\pg_upgrade.exe" -d "C:\Program Files\PostgreSQL\11\data" -D "C:\Program Files\PostgreSQL\14\data" -b "C:\Program Files\PostgreSQL\14\bin" -B "C:\Program Files\PostgreSQL\14\bin" --link --check -U Postgres`
 
 https://www.sqlservercentral.com/articles/upgrade-postgresql-9-x-to-12-x-in-windows
 
