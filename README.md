@@ -1,5 +1,11 @@
 # postgresql-gis_notes
 Series of functions and scripts for Postgresal/PostGIS
+# UPGRADING PSQL FOR WINDOWS
+1) Create a copy of the configuration file (pg_hba.conf and postgresql.conf) located in `C:\Program Files\PostgreSQL\XX\data`
+2) Obtaining a complete backup of all databases using the `pg_dumpall` command 
+
+
+https://www.sqlservercentral.com/articles/upgrade-postgresql-9-x-to-12-x-in-windows
 
 ## PostGIS scripts
 ### Extract coordinates from geom column and update coordinate fields with these values
