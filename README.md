@@ -1,9 +1,9 @@
 # postgresql-gis_notes
 Series of functions and scripts for Postgresql/PostGIS
-# UPGRADING PSQL FOR WINDOWS
+## UPGRADING PSQL FOR WINDOWS
 1) Create a copy of the configuration file (pg_hba.conf and postgresql.conf) located in `C:\Program Files\PostgreSQL\XX\data`
 2) Obtaining a complete backup of all databases using the `pg_dump` command
-` cd C:\Program Files\PostgreSQL\11\bin`
+`cd C:\Program Files\PostgreSQL\11\bin`
 `pg_dump -U postgres -F t punti_investimeno > I:\Backup_db\punti_investimento.tar`
 3) Install the new version of Postgresql
 4) Stop services of both the versions
