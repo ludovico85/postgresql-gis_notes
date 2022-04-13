@@ -13,6 +13,10 @@ Series of functions and scripts for Postgresql/PostGIS
 
 https://www.sqlservercentral.com/articles/upgrade-postgresql-9-x-to-12-x-in-windows
 
+## backup (windows)
+`cd C:\Program Files\PostgreSQL\14\bin`
+`pg_dump.exe -U "postgres" -p 5433 -F c -b "Duronia_egov" > I:/Progetti/current_works/egov/Backup/apr_2022/Duronia_egov.sql`
+
 ## PostGIS scripts
 ### Extract coordinates from geom column and update coordinate fields with these values
 
