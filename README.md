@@ -200,3 +200,7 @@ CREATE TRIGGER pop_nom_sci_update_rettili
 	WHEN (OLD.geom IS DISTINCT FROM NEW.geom)
 	EXECUTE PROCEDURE pop_nome_scientifico_rettili();
 ```
+## import raster data to database
+```
+raster2pgsql.exe -M -C -I -t 256x256 -l 2,4,8 "path_to_raster\raster.tif" schema.raster_table | psql -d db_name -U user -h host -p port
+```
